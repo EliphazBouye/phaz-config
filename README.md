@@ -1,1 +1,0 @@
-# Sophonie Dotfiles configurations
