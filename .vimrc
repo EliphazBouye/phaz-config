@@ -22,7 +22,6 @@ set nostartofline
 set completeopt=menu,popup #completepopup
 set list listchars=tab:→\ ,eol:↲,extends:›,precedes:‹,nbsp:·,trail:· showbreak=↪\
 set scrolloff=8
-colorscheme delek
 
 # Turn on wild menu
 set wildmenu
@@ -48,6 +47,12 @@ set matchtime=2
 
 # Show a bit extra margin to the left
 set foldcolumn=1
+
+# Font & Color
+try
+    colorscheme delek
+catch
+endtry
 
 #######
 nnoremap <leader>w :w!<CR>
