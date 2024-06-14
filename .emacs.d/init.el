@@ -5,14 +5,14 @@
   (package-refresh-contents))
 
 ;; My custom packages
-(setq eliphaz/package-dir "/home/eliphaz/.emacs.d/personal/packages/")
+(setq sophonie/package-dir "/home/sophonie/.emacs.d/personal/packages/")
 
 ;; My custom themes
-(setq eliphaz/theme-dir "/home/eliphaz/.emacs.d/personal/themes/")
-(setq eliphaz/theme 'phaz)
+(setq sophonie/theme-dir "/home/sophonie/.emacs.d/personal/themes/")
+(setq sophonie/theme 'phaz)
 
 ;; Programming mode
-(setq eliphaz/programming-modes '(javascript-mode
+(setq sophonie/programming-modes '(javascript-mode
 				  html-mode
 				  c-mode
 				  css-mode
@@ -25,7 +25,7 @@
 				  php-mode
 				  web-mode))
 
-(setq eliphaz/indent 2)
+(setq sophonie/indent 2)
 
 
 ;; enable Line Number and relative style from hook
@@ -46,7 +46,7 @@
 (global-auto-revert-mode 1)
 
 ;; Indent
-(setq default-input-method eliphaz/indent)
+(setq default-input-method sophonie/indent)
 
 ;; Persist across session
 (desktop-save-mode 1)
