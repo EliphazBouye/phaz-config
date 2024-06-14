@@ -50,7 +50,8 @@ set foldcolumn=1
 
 # Font & Color
 try
-    colorscheme delek
+    set background=dark
+    colorscheme retrobox
 catch
 endtry
 
@@ -58,3 +59,15 @@ endtry
 nnoremap <leader>w :w!<CR>
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
+# File explorer
+nnoremap <leader>fe :Ex<CR>
+
+# Disable search highlighting
+nnoremap <ESC> :nohlsearch<CR>
+
+# Delete buffer
+nnoremap <leader>d :bdelete<CR>
+
+# Navigate between buffer
+nmap <leader>, :bprevious<CR>
+nmap <leader>. :bnext<CR>
