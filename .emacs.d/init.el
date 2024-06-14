@@ -4,7 +4,31 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Enable Line Number and relative style from hook
+;; My custom packages
+(setq eliphaz/package-dir "/home/eliphaz/.emacs.d/personal/packages/")
+
+;; My custom themes
+(setq eliphaz/theme-dir "/home/eliphaz/.emacs.d/personal/themes/")
+(setq eliphaz/theme 'phaz)
+
+;; Programming mode
+(setq eliphaz/programming-modes '(javascript-mode
+				  html-mode
+				  c-mode
+				  css-mode
+				  sh-mode
+				  conf-mode
+				  emacs-lisp-mode
+				  lisp-interaction-mode
+				  typescript-mode
+				  python-mode
+				  php-mode
+				  web-mode))
+
+(setq eliphaz/indent 2)
+
+
+;; enable Line Number and relative style from hook
 (defun line-numbers-and-relative ()
   (display-line-numbers-mode)
   (if display-line-numbers
@@ -13,7 +37,26 @@
 (add-hook 'prog-mode-hook 'line-numbers-and-relative)
 
 ;; Manage backup files
-(setq backup-directory-alist '(("." . "~/.emacs-backup-file")))
+;; (setq backup-directory-alist '(("." . "~/.emacs-backup-file")))
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+
+;; Revert buffer when changed in disk
+(global-auto-revert-mode 1)
+
+;; Indent
+(setq default-input-method eliphaz/indent)
+
+;; Persist across session
+(desktop-save-mode 1)
+(save-place-mode 1)
+
+;; Highlight line
+(global-hl-line-mode 1)
+
+;; Write over the range
+(delete-selection-mode 1)
 
 ;; Remove some visual unless
 (menu-bar-mode -1)
@@ -87,3 +130,9 @@
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (lsp-deferred))))  ; or lsp-deferred
+
+;; Command emergency
+(global-set-key (kbd "M-<") #'beginning-of-buffer)
+(global-set-key (kbd "M->") #'end-of-buffer)
+
+
