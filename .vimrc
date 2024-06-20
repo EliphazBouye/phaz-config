@@ -57,7 +57,7 @@ endtry
 
 #######
 nnoremap <leader>w :w!<CR>
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+#command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
 # File explorer
 nnoremap <leader>fe :Ex<CR>

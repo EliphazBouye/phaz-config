@@ -18,4 +18,12 @@ alias dzg='dotphaz pull'
 alias dzw='dotphaz commit -m'
 
 # NodeJS
-export PATH=$HOME/src/nodejs/current/node-v22.3.0-linux-x64/bin:$PATH
+export PATH=$HOME/Programming/nodejs/current/node-v22.3.0-linux-x64/bin:$PATH
+
+alias l='ls'
+alias la='ls -la'
+alias ll='ls -l'
+alias lh='ls -lh'
+
+# Golang LSP
+export PATH=$HOME/go/bin:$PATH

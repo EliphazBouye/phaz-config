@@ -1,5 +1,5 @@
 live_config_reload = true
 
 [font]
-normal.family = "Jetbrains Mono"
+normal.family = "Iosevka Comfy"
 size = 14.0
