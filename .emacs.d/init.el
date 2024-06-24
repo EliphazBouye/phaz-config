@@ -1,19 +1,18 @@
 (require 'package)
-(add-to-list 'package-archives '(("melpa" . "https://melpa.org/packages/")
-				 ("org" . "https://orgmode.org/elpa/")) t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 
 ;; My custom packages
-(setq eliphaz/package-dir "/home/eliphaz/.bash_history/.emacs.d/personal/packages/")
+(setq sophonie/package-dir "/home/sophonie/.bash_history/.emacs.d/personal/packages/")
 
 ;; My custom themes
-(setq eliphaz/theme-dir "/home/eliphaz/.emacs.d/personal/themes/")
-(setq eliphaz/theme 'phaz)
+(setq sophonie/theme-dir "/home/sophonie/.emacs.d/personal/themes/")
+(setq sophonie/theme 'phaz)
 
 ;; Programming mode
-(setq eliphaz/programming-modes '(javascript-mode
+(setq sophonie/programming-modes '(javascript-mode
 				  html-mode
 				  c-mode
 				  css-mode
@@ -27,7 +26,7 @@
 				  go-mode
 				  web-mode))
 
-(setq eliphaz/indent 2)
+(setq sophonie/indent 2)
 
 
 ;; enable Line Number and relative style from hook
@@ -48,7 +47,7 @@
 (global-auto-revert-mode 1)
 
 ;; Indent
-(setq default-input-method eliphaz/indent)
+(setq default-input-method sophonie/indent)
 
 ;; Persist across session
 ;;(desktop-save-mode 1)
@@ -69,8 +68,8 @@
 (setq ring-bell-function 'ignore)
 
 ;; Define my fonts
-(set-face-attribute 'default nil :font "Iosevka Comfy-12")
-(set-frame-font "Iosevka Comfy-12" nil t)
+(set-face-attribute 'default nil :font "Jetbrains Mono-12")
+(set-frame-font "Jetbrains Mono-12" nil t)
 
 ;; Theme
 (use-package zenburn-theme
@@ -79,7 +78,7 @@
   :ensure t)
 
 ;; Load modus-theme
-(load-theme 'gruvbox-light-medium t)
+(load-theme 'gruvbox-dark-medium t)
 
 ;; Enable Ido for better navigation
 (ido-mode)
@@ -101,7 +100,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons all-the-icons-install-fonts org-mode orgmode lsp-ui magit gruvbox-theme smex go-mode typescript-mode company flycheck lsp-pyright lsp-mode zenburn-theme)))
+   '(dockerfile-mode lsp-docker docker-compose-mode docker all-the-icons all-the-icons-install-fonts org-mode orgmode lsp-ui magit gruvbox-theme smex go-mode typescript-mode company flycheck lsp-pyright lsp-mode zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -128,6 +127,24 @@
 (use-package typescript-mode
   :ensure t)
 
+;; PHP mode
+(use-package php-mode
+  :ensure t)
+
+;; Web mode
+(use-package web-mode
+  :ensure t)
+
+;; Docker mode
+(use-package docker
+  :ensure t)
+
+(use-package dockerfile-mode
+  :ensure t)
+
+(use-package docker-compose-mode
+  :ensure t)
+
 ;; LSP
 (use-package lsp-mode
   :ensure t
@@ -145,7 +162,7 @@
       (lsp-format-buffer)))
   
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         ((javascript-mode typescript-mode python-mode php-mode c-mode go-mode) . lsp-deferred)
+         ('sophonie/programming-modes . lsp-deferred)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp-deferred)
@@ -179,6 +196,14 @@
                          (require 'lsp-pyright)
                          (lsp-deferred))))  ; or lsp-deferred
 
+;; Docker LSP
+(use-package lsp-docker
+  :ensure t
+  :hook (docker-mode . (lambda ()
+                         (require 'lsp-docker)
+                         (lsp-deferred))))  ; or lsp-deferred
+
+
 ;; Magit
 (use-package magit
   :ensure t)
@@ -198,6 +223,7 @@
 	 ("C-c c" . org-capture))
   :config
   (setq org-agenda-files '("~/Documents/todo.org")))
+
 
 
 

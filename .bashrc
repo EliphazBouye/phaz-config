@@ -9,16 +9,16 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
-alias dotphaz="/usr/bin/git --git-dir=$HOME/.dotphaz/ --work-tree=$HOME"
+alias sophofile="/usr/bin/git --git-dir=$HOME/.sophofiles/ --work-tree=$HOME"
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
-alias dzs='dotphaz push -u origin main'
-alias dzl='dotphaz fetch'
-alias dzg='dotphaz pull'
-alias dzw='dotphaz commit -m'
+alias soP='sophofile push -u origin main'
+alias sof='sophofile fetch'
+alias sop='sophofile pull'
+alias som='sophofile commit -m'
 
 # NodeJS
-export PATH=$HOME/Programming/nodejs/current/node-v22.3.0-linux-x64/bin:$PATH
+export PATH=$HOME/working_dir/nodejs/current/node-v22.3.0-linux-x64/bin:$PATH
 
 alias l='ls'
 alias la='ls -la'
