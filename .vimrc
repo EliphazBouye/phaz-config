@@ -1,73 +1,146 @@
 vim9script
 
+# Set leader
+g:mapleader = " "
+
+# Enble syntax highlighting
 syntax on
-filetype on
 
-g:mapleader = "\<space>"
-$LANG = 'en'
-g:langmenu = 'en'
+# Line number
+set number
 
-set number relativenumber cursorline cursorlineopt=number 
-set shiftwidth=4 softtabstop=-1 expandtab
-set autoindent
-set timeout timeoutlen=3000 ttimeoutlen=100
-set hlsearch incsearch ignorecase smartcase
-set nowrap breakindent
-set fileformat=unix fileformats=unix,dos
-set display=lastline smoothscroll
-set signcolumn=number
-set sidescroll=1 sidescrolloff=3
-set virtualedit=block
-set nostartofline
-set completeopt=menu,popup #completepopup
-set list listchars=tab:→\ ,eol:↲,extends:›,precedes:‹,nbsp:·,trail:· showbreak=↪\
-set scrolloff=8
+# Use relative number
+set relativenumber
 
-# Turn on wild menu
+# Use cursorline
+set cursorline
+
+# Change colorscheme
+colorscheme  retrobox
+
+# Change background color
+set background=dark
+
+# Keep undo history
+set undofile
+
+# Display completion matches in status line
 set wildmenu
 
-# Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+# Show @@@ in the last line if it is truncated
+set display=truncate
 
-# Always show current position
-set ruler
+# Display matched for the search pattern
+set incsearch
 
-# A buffer become hidden when is it abandoned
+# Higlight search result
+set hlsearch
+
+# Unload hidden buffer
 set hidden
 
-# Don't redraw with executing macros (for better perf)
-set lazyredraw
+# Tab related settings
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
 
-# Show matching brackets when text indicator is other them
-set showmatch
+# Scroll off limit
+set scrolloff=8
 
-# How many tenths of a second to blink when matching brackets
-set matchtime=2
 
-# Show a bit extra margin to the left
-set foldcolumn=1
+# Auto Command
+# Disable cursorline in insert mode
+autocmd InsertEnter,InsertLeave * set cursorline!
 
-# Font & Color
-try
-    set background=dark
-    colorscheme retrobox
-catch
-endtry
+# Mappings
+# Disable highlighting after search
+nmap <Leader>s :nohlsearch<CR>
 
-#######
-nnoremap <leader>w :w!<CR>
-#command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+# Useful mapping
+map \c i{<Esc>ea}<Esc>
+map \q  i'<Esc>ea'<Esc>
+map \dq i"<Esc>ea"<Esc>
 
-# File explorer
-nnoremap <leader>fe :Ex<CR>
+# Plugins
+# Match html tags and if,endif,...
+packadd! matchit
 
-# Disable search highlighting
-nnoremap <ESC> :nohlsearch<CR>
+# Editor config plugin for edit config to use when coding
+packadd! editorconfig 
 
-# Delete buffer
-nnoremap <leader>d :bdelete<CR>
+# Add lsp plugin
+packadd lsp
 
-# Navigate between buffer
-nmap <leader>, :bprevious<CR>
-nmap <leader>. :bnext<CR>
+var lspServers = [
+  {
+    name: 'pyright-langserver',
+    filetype: ['python'],
+    path: '/home/eliphaz/Programming/nodejs/current/node-v22.3.0-linux-x64/bin/pyright-langserver',
+    args: ['--stdio'],
+    workspaceConfig: {
+        python: {
+          analysis: {
+            autoSearchPaths: true,
+            diagnosticMode: 'workspace',
+            useLibraryCodeForTypes: true,
+          },
+        },
+      },
+    customNotificationHandlers: {
+      'pyright/beginProgress': (_, _) => true,
+      'pyright/reportProgress': (_, _) => true,
+      'pyright/endProgress': (_, _) => true,
+    },
+  },
+  {
+    name: 'tsserver',
+    filetype: ['typescript', 'javascript'],
+    path: '/home/eliphaz/Programming/nodejs/current/node-v22.3.0-linux-x64/bin/typescript-language-server',
+    args: ['--stdio'],
+    debug: v:true,
+    workspaceConfig: {
+        javascript: {
+          analysis: {
+            autoSearchPaths: true,
+            diagnosticMode: 'workspace',
+            useLibraryCodeForTypes: true,
+          },
+        },
+      },
+  }
+]
+
+# LSP options
+var lspOpts = {
+  autoComplete: v:true,
+  autoHighlight: v:false,
+  autoHighlightDiags: v:true,
+  diagSignErrorText: 'E>',
+  diagSignHintText: 'H>',
+  diagSignInfoText: 'I>',
+  diagSignWarningText: 'W>',
+  showDiagInBalloon: v:true,
+  showDiagInPopup: v:true,
+  showDiagOnStatusLine: v:false,
+  showDiagWithSign: v:true,
+  showDiagWithVirtualText: v:true,
+  completionTextEdit: v:false,
+  diagVirtualTextAlign: 'after',
+  diagVirtualTextWrap: 'wrap',
+  noNewlineInCompletion: v:true,
+  useQuickfixForLocations: v:true,
+}
+
+g:LspOptionsSet(lspOpts)
+g:LspAddServer(lspServers)
+
+noremap gD :LspGotoDeclaration<CR>
+noremap gd :LspGotoDefinition<CR>
+noremap <leader>rn :LspRename<CR>
+
+#set cmdheight=2
+
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
